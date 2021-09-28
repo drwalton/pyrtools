@@ -191,6 +191,10 @@ class SteerablePyramidFreq(SteerablePyramidBase):
             lomask = lomask.reshape(lodft.shape[0], lodft.shape[1])
             self._lomasks.append(lomask)
 
+            import matplotlib.pyplot as plt
+            plt.imshow(lomask)
+            plt.show()
+
             lodft = lodft * lomask
 
         lodft = np.fft.ifft2(np.fft.ifftshift(lodft))
