@@ -167,6 +167,16 @@ class SteerablePyramidFreq(SteerablePyramidBase):
                 # that (-1j)**order term in the beginning will be 1, -j, -1, j for order 0, 1, 2,
                 # 3, and will then loop again
                 banddft = (-1j) ** self.order * lodft * anglemask * himask
+                import matplotlib.pyplot as plt
+                plt.subplot(1,2,1)
+                plt.title("Real part")
+                plt.imshow(np.real((-1j) ** self.order * anglemask * himask))
+                plt.colorbar()
+                plt.subplot(1,2,2)
+                plt.title("imag part")
+                plt.imshow(np.imag((-1j) ** self.order * anglemask * himask))
+                plt.colorbar()
+                plt.show()
                 band = np.fft.ifft2(np.fft.ifftshift(banddft))
                 if not self.is_complex:
                     self.pyr_coeffs[(i, b)] = np.real(band.copy())
@@ -191,9 +201,6 @@ class SteerablePyramidFreq(SteerablePyramidBase):
             lomask = lomask.reshape(lodft.shape[0], lodft.shape[1])
             self._lomasks.append(lomask)
 
-            import matplotlib.pyplot as plt
-            plt.imshow(lomask)
-            plt.show()
 
             lodft = lodft * lomask
 
